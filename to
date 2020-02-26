@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Assume the python file is in the same directory as this executable
+TOGOERDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Execute the python file with the command line
+THESCRIPT="$(python ${TOGOERDIR}/togoer.py $@)"
+
+SUCCESS="$?"
+if [ "$SUCCESS" == "0" ]; then
+    # If exit status 0, a script was returned which is to be sourced.
+    source $THESCRIPT
+else
+    # Otherwise an there is an error message to be displayed
+    echo "Failure:"
+    echo "$THESCRIPT"
+fi
